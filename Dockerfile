@@ -31,8 +31,9 @@ WORKDIR /var/www/html
 # Aplique as permissões corretas para os arquivos
 RUN chmod -R 755 /var/www/html
 
-# Instale as dependências do Laravel
-RUN composer install --no-interaction
+# Instale as dependências do Laravel e execute as migrações 
+RUN composer install --no-interaction && \
+    php artisan migrate
 
 # Atualize ou adicione a seguinte linha para configurar o DocumentRoot
 RUN sed -i 's|/var/www/html|/var/www/html/public|' /etc/apache2/sites-available/000-default.conf
